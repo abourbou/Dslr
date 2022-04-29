@@ -1,2 +1,2 @@
 # Dslr
-Introduction project of Datascience and logistic regression
+Introduction project of Datascience and Logistic Regression
