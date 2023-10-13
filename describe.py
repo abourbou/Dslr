@@ -36,7 +36,8 @@ def describe_arr(arr_feature):
 	arr_data = [subarray[1:] for subarray in arr_feature]
 
 	means = [sum(map(float, subarray)) / len(subarray) if (subarray and is_float(subarray[0]))
-			else float('nan')
+			else 'NaN' if subarray
+			else ''
 			for subarray in arr_data]
 
 	std_devs = []
@@ -47,8 +48,10 @@ def describe_arr(arr_feature):
 			for elem in subarray:
 				std_dev += (float(elem) - means[i]) ** 2
 			std_dev = math.sqrt(std_dev / len(subarray))
-		else:
-			std_dev = float('nan')
+		elif subarray :
+			std_dev = 'NaN'
+		else :
+			std_dev = ''
 		std_devs.append(std_dev)
 
 	mins = []
@@ -65,36 +68,56 @@ def describe_arr(arr_feature):
 			subarray = list(map(float, subarray))
 			subarray.sort()
 			mins.append(subarray[0])
-			first_quartiles.append(subarray[fst_quart_pos] - 1)
+			first_quartiles.append(subarray[fst_quart_pos - 1])
 			median_pos = len(subarray) / 2.
 			if (median_pos.is_integer()) :
 				medians.append((subarray[int(median_pos) - 1] + subarray[int(median_pos)]) / 2.)
 			else :
 				medians.append(subarray[math.ceil(median_pos) - 1])
-			third_quartiles.append(subarray[trd_quart_pos] - 1)
+			third_quartiles.append(subarray[trd_quart_pos - 1])
 			maxs.append(subarray[-1])
 		else :
-			mins.append(float('nan'))
-			first_quartiles.append(float('nan'))
-			medians.append(float('nan'))
-			third_quartiles.append(float('nan'))
-			maxs.append(float('nan'))
-
+			if subarray :
+				subarray.sort()
+				mins.append(subarray[0])
+				first_quartiles.append(subarray[fst_quart_pos - 1])
+				median_pos = len(subarray) / 2.
+				medians.append(subarray[math.ceil(median_pos) - 1])
+				third_quartiles.append(subarray[trd_quart_pos - 1])
+				maxs.append(subarray[-1])
+			else :
+				mins.append('')
+				first_quartiles.append('')
+				medians.append('')
+				third_quartiles.append('')
+				maxs.append('')	
 
 	print("*********************************************************************************************************************************************")
 	print(f"{'Name' [:15]:<20}\t{'Count':<10}\t{'Mean':<10}\t{'Std':<10}\t{'Min':<10}\t{'25%':<10}\t{'50%':<10}\t{'75%':<10}\t{'Max':<10}")
 	print("---------------------------------------------------------------------------------------------------------------------------------------------")
 	for i in range(len(arr_name)):
-		print(f"{arr_name[i] [:15]:<20}\t", end="")
-		print(f"{len(arr_data[i]) :<10}\t", end="")
-		print(f"{means[i] :<10.3f}\t", end="")
-		print(f"{std_devs[i] :<10.3f}\t", end="")
-		print(f"{mins[i] :<10.3f}\t", end="")
-		print(f"{first_quartiles[i] :<10.3f}\t", end="")
-		print(f"{medians[i] :<10.3f}\t", end="")
-		print(f"{third_quartiles[i] :<10.3f}\t", end="")
-		print(f"{maxs[i] :<10.3f}\t", end="")
-		print()
+		if arr_data[i] and is_float(arr_data[i][0]) :
+			print(f"{arr_name[i] [:15]:<20}\t", end="")
+			print(f"{len(arr_data[i]) :<10}\t", end="")
+			print(f"{means[i] :<10.3f}\t", end="")
+			print(f"{std_devs[i] :<10.3f}\t", end="")
+			print(f"{mins[i] :<10.3f}\t", end="")
+			print(f"{first_quartiles[i] :<10.3f}\t", end="")
+			print(f"{medians[i] :<10.3f}\t", end="")
+			print(f"{third_quartiles[i] :<10.3f}\t", end="")
+			print(f"{maxs[i] :<10.3f}\t", end="")
+			print()
+		else :
+			print(f"{arr_name[i] [:15]:<20}\t", end="")
+			print(f"{len(arr_data[i]) :<10}\t", end="")
+			print(f"{means[i] :<10}\t", end="")
+			print(f"{std_devs[i] :<10}\t", end="")
+			print(f"{mins[i] :<10}\t", end="")
+			print(f"{first_quartiles[i] :<10}\t", end="")
+			print(f"{medians[i] :<10}\t", end="")
+			print(f"{third_quartiles[i] :<10}\t", end="")
+			print(f"{maxs[i] :<10}\t", end="")
+			print()
 
 def main():
 	if (len(sys.argv) != 2):
@@ -106,7 +129,6 @@ def main():
 		print("empty data")
 		return 1
 	arr_feature = sort_arr_by_feature(arr_csv)
-
 
 	# Describe the array
 	describe_arr(arr_feature)
