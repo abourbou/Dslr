@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 .vscode
+coeffs_logistic_regression.csv
