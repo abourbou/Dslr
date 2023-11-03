@@ -44,3 +44,32 @@ Intermediate : History Of Magic, Flying => Take one of the 2, History Of Magic s
 Bad : Best Hand (too few values and bad distribution), Arithmancy (bad pair plot), Astronomy(correlated), Potions (bad pair plot), Care of MagCreat (bad pair plot), Transfiguration (bad std dev)
 
 Final choice of parameters : DefAgDrkMag, Herbology, Charms, Ancien Runes, Divination, Muggle Studies and History Of Magic
+
+# Logistic regression
+
+## Use of logistic function
+
+![equation logistic function](doc/equation_logistic_function.png)
+
+![graphic logistic function](doc/graphic_logistic_function.png)
+
+## Logistic regression cost function
+
+Cost function global formula
+
+![cost function global formula](doc/cost_function_global_formula.png)
+
+
+Cost function for logistic regression
+
+![cost function for logistic regression](doc/logistic_cost_function.png)
+
+## Gradient descent
+
+Global formula
+
+![gradient descent general formula](doc/gradient_descent_formula.png)
+
+Logistic regression formula
+
+![gradient descent logistic regression formula](doc/logistic_gradient_descent.png)
